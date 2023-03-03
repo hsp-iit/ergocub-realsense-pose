@@ -45,40 +45,16 @@ int main(int argc, char** argv)
         throw(std::runtime_error(log_prefix + "::main(). Error: cannot find YARP network."));
 
     /* Set list of joints to be used. */
-    std::vector<std::string> list_joints;
-
-    if (robot_name == "ergocubSim")
+    std::vector<std::string> list_joints =
     {
-        list_joints =
-        {
-            "torso_yaw",
-            "torso_pitch",
-            "torso_roll",
-            "neck_pitch",
-            "neck_roll",
-            "neck_yaw",
-            "camera_tilt"
-        };
-    }
-    else if (robot_name == "ergocub")
-    {
-        list_joints =
-        {
-            "torso_roll",
-            "torso_pitch",
-            "torso_yaw",
-            "neck_pitch",
-            "neck_roll",
-            "neck_yaw",
-            "camera_tilt"
-        };
-    }
-    else
-    {
-        std::cerr << "Supported values for <robot_name> are 'ergocub' and 'ergocubSim'" << std::endl << std::endl;
-
-        return EXIT_FAILURE;
-    }
+        "torso_roll",
+        "torso_pitch",
+        "torso_yaw",
+        "neck_pitch",
+        "neck_roll",
+        "neck_yaw",
+        "camera_tilt"
+    };
 
     /* Instantiate iDynTree-based forward kinematics. */
     ForwardKinematicsiDynTree fk(urdf_path, list_joints, root_frame_name, ee_frame_name);

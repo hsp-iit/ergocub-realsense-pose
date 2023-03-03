@@ -89,7 +89,7 @@ int main(int argc, char** argv)
     /* Instantiate output probe. */
     Probe probe("/" + log_prefix + "/pose:o");
 
-    /* Control loop. */
+    /* Update loop. */
     while (true)
     {
         /* Read encoders. */

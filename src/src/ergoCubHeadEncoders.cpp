@@ -74,11 +74,11 @@ std::tuple<bool, VectorXd> ergoCubHeadEncoders::joints() const
         return std::make_tuple(false, joints);
 
     /* Assemble output vector. */
-    joints.resize(number_joints_torso + number_joints_head);
-    for (std::size_t i = 0; i < number_joints_torso; i++)
-        joints(i) = joints_torso(i);
+    joints.resize(2 + number_joints_head);
+    joints(0) = joints_torso(0);
+    joints(1) = joints_torso(2);
     for (std::size_t i = 0; i < number_joints_head; i++)
-        joints(i + 3) = joints_head(i);
+        joints(i + 2) = joints_head(i);
 
     joints *= M_PI / 180.0;
 

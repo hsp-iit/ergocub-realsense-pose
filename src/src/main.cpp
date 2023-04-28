@@ -48,7 +48,6 @@ int main(int argc, char** argv)
     std::vector<std::string> list_joints =
     {
         "torso_roll",
-        "torso_pitch",
         "torso_yaw",
         "neck_pitch",
         "neck_roll",

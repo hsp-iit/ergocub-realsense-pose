@@ -22,6 +22,7 @@ make install
 ```
 
 ### How to run
+On the robot torso:
 ```console
 ergocub-rs-pose $YARP_ROBOT_NAME /usr/local/src/robot/robotology-superbuild/src/ergocub-software/urdf/ergoCub/robots/$YARP_ROBOT_NAME/model.urdf
 ```

@@ -55,8 +55,6 @@ int main(int argc, char** argv)
 			std::cerr << "[ergocub-rs-pose] " << " YARP_ROBOT_NAME not set, aborting...";
 			return 1;
 		}
-
-        return EXIT_FAILURE;
     }
     else
     {

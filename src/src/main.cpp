@@ -11,6 +11,7 @@
 #include <string>
 #include <thread>
 #include <vector>
+#include <filesystem>
 
 #include <Eigen/Dense>
 
@@ -27,16 +28,42 @@ using namespace std::literals::chrono_literals;
 int main(int argc, char** argv)
 {
     const std::string log_prefix = "ergocub-rs-pose";
+    std::string robot_name = "ergocub";
+    std::string urdf_path;
 
     if (argc != 3)
     {
-        std::cerr << "Synopsis: " + log_prefix + " <robot_name> <urdf_path>" << std::endl << std::endl;
+        // Automatically get the path to urdf based on robot name env var
+		const char* env_var = std::getenv("YARP_ROBOT_NAME");
+    	std::string robot_name = (env_var != nullptr) ? env_var : ""; 
+		if (!robot_name.empty()) 
+		{
+        	urdf_path = "/usr/local/src/robot/robotology-superbuild/src/ergocub-software/urdf/ergoCub/robots/" + robot_name + "/model.urdf";
+			std::cerr << "[ergocub-rs-pose] " << "Robot Port prefix name and path to URDF are required. USING DEFAULT ONES:\n" <<
+				  "robot_name " << robot_name << "\n" <<
+				  "urdf_path " << urdf_path << std::endl;
+            std::cerr << "Synopsis: " + log_prefix + " <robot_name> <urdf_path>" << std::endl << std::endl;
+            // check if file exist:
+            if (!std::filesystem::exists(urdf_path))
+            {
+                std::cerr << "[ergocub-rs-pose] the urdf file path does not exist: " << urdf_path << std::endl;
+                return 1;
+            }
+    	}
+		else
+		{
+			std::cerr << "[ergocub-rs-pose] " << " YARP_ROBOT_NAME not set, aborting...";
+			return 1;
+		}
 
         return EXIT_FAILURE;
     }
-
-    const std::string robot_name{argv[1]};
-    const std::string urdf_path{argv[2]};
+    else
+    {
+        robot_name = argv[1];
+        urdf_path = argv[2];
+    }
+    
     const std::string root_frame_name = "root_link";
     const std::string ee_frame_name = "realsense_rgb_frame";
 
